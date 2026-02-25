@@ -1,0 +1,23 @@
+// ===============================================
+// Index Mapping (Knowledge + Memory)
+// ===============================================
+
+PUT /knowledge_and_memory_index
+{
+  "mappings": {
+    "properties": {
+      "content": { "type": "text" },                  // for BM25
+      "title": { "type": "text" },
+      "metadata": { "type": "object" },
+      "timestamp": { "type": "date" },                // for recency bias
+      "content_vector": {
+        "type": "dense_vector",
+        "dims": 768,                                  // e.g., for intfloat/e5-large or similar
+        "index": true,
+        "similarity": "cosine"
+      },
+      "session_id": { "type": "keyword" },           // optional for session scoping
+      "interaction_type": { "type": "keyword" }      // e.g., query, response, tool_call
+    }
+  }
+}
